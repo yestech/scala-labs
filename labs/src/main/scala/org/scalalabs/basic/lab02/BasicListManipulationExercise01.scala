@@ -12,11 +12,11 @@ object BasicListManipulationExercise01 {
 
   /**
    * Get the first element in the list. Hint: there is a built-in function for this you can use.
-   * 
+   *
    */
   def firstElementInList[T](l: List[T]): T = {
     //buildin
-    null.asInstanceOf[T]
+    l.head
   }
 
   /**
@@ -25,7 +25,8 @@ object BasicListManipulationExercise01 {
    * https://www.scala-lang.org/docu/files/api/scala/List.html#foldLeft(B)
    */
   def sumOfList(l: List[Int]): Int = {
-    error("fix me")
+    //    l reduceLeft (_ + _)
+    l.foldLeft(0)((a, b) => a + b)
   }
 
   /**
@@ -37,10 +38,10 @@ object BasicListManipulationExercise01 {
    *  - ... etc
    */
   def lastElementInList[T](l: List[T]): T = {
-    error("fix me")
+    l.last
   }
 
-   /**
+  /**
    * Get the nth element in the list, e.g. nthElementInList(3, List(1,2,3,4)) = 3.
    * Hint: this can be achieved in multiple ways:
    *  - built in
@@ -49,7 +50,7 @@ object BasicListManipulationExercise01 {
    *  - ... etc
    */
   def nthElementInList[T](n: Int, l: List[T]): T = {
-    error("fix me")
+    l(n)
   }
 
   /**
@@ -61,7 +62,7 @@ object BasicListManipulationExercise01 {
    *  - ... etc 
    */
   def concatLists[T](l1: List[T], l2: List[T]): List[T] = {
-    error("fix me")
+    l1 ::: l2
   }
 
   /**
@@ -70,10 +71,10 @@ object BasicListManipulationExercise01 {
    * - built in using the sort method
    * - via a foldLeft method (a bit complex, but fun)
    * - ... whichever way you like 
-   * 
+   *
    */
   def sortList[T <% Ordered[T]](list: List[T]): List[T] = {
-    error("fix me")
+    list.sortWith((a, b) => a < b)
   }
 
   /**
@@ -81,7 +82,9 @@ object BasicListManipulationExercise01 {
    * Again, easy to implement using built-in functionality, but also possible to implement in your own free-style way.
    */
   def elementExists[T](l: List[T], e: T): Boolean = {
-    error("fix me")
+    l.exists({
+      i => i == e
+    })
   }
 
   /**
@@ -90,7 +93,10 @@ object BasicListManipulationExercise01 {
    * pattern match or some other method.
    */
   def oddElements(iList: List[Int]): List[Int] = {
-    error("fix me")
+    iList filter {
+      i =>
+        i % 2 != 0
+    }
   }
 
   /**
@@ -101,7 +107,8 @@ object BasicListManipulationExercise01 {
    * Implement it whatever way suites you best. Hint: it can be done in a neat way using recursion. 
    */
   def tails[T](l: List[T]): List[List[T]] = {
-    error("fix me")
+    if (l.isEmpty) List(Nil)
+    else l :: tails(l.tail)
   }
 }
 
