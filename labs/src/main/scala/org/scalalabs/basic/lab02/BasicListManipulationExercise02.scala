@@ -12,14 +12,14 @@ object BasicListManipulationExercise02 {
    * As usual, various ways exist: pattern matching, folding, ...
    */
   def maxElementInList(l: List[Int]): Int = {
-      def f (is: List[Int], acc: Int): Int = {
-          is match {
-            case Nil => acc
-            case (x :: xs) if x > acc => f(xs, x)
-            case (x :: xs)            => f(xs, acc)
-        }
+    def f(is: List[Int], acc: Int): Int = {
+      is match {
+        case Nil => acc
+        case (x :: xs) if x > acc => f(xs, x)
+        case (x :: xs) => f(xs, acc)
       }
-      f(l,0)
+    }
+    f(l, 0)
   }
 
   /**
@@ -27,7 +27,17 @@ object BasicListManipulationExercise02 {
    * of the two list
    */
   def sumOfTwo(l1: List[Int], l2: List[Int]): List[Int] = {
-    error("fix me")
+    //use a tuple to see whether one of the element is Nil
+    (l1, l2) match {
+      case (Nil, ys) => ys
+      case (xs, Nil) => xs
+      //another way to express the addition of the elements could be
+      //with an anonymous function instead of a partial function expressed with case(a, b) etc.
+      //case (xs, ys) => xs zip ys map((t:(Int, Int)) => t._1 + t._2)
+      case (xs, ys) => xs zip ys map {
+        case (a, b) => a + b
+      }
+    }
   }
 
   /**
@@ -35,7 +45,14 @@ object BasicListManipulationExercise02 {
    * method above
    */
   def sumOfMany(l: List[Int]*): List[Int] = {
-    error("fix me")
+
+    def f(l: List[List[Int]]): List[Int] = {
+      (l) match {
+        case head :: tail => sumOfTwo(head, f(tail))
+        case Nil => Nil
+      }
+    }
+    f(l.toList)
   }
 
   /**
@@ -45,29 +62,38 @@ object BasicListManipulationExercise02 {
    * in a one-liner.
    */
   def separateTheMenFromTheBoys(persons: List[Person]): List[List[String]] = {
-    var boys: ListBuffer[Person] = new ListBuffer[Person]()
-    var men: ListBuffer[Person] = new ListBuffer[Person]()
-    var validBoyNames: ListBuffer[String] = new ListBuffer[String]()
-    var validMenNames: ListBuffer[String] = new ListBuffer[String]()
+    //FROM--------
 
-    for (person <- persons) {
-        if (person.age < 18) {
-          boys += person
-        } else {
-          men += person
-        }
-    }
+    //    persons.map(pers).sortBy()
+    //    var boys: ListBuffer[Person] = new ListBuffer[Person]()
+    //    var men: ListBuffer[Person] = new ListBuffer[Person]()
+    //    var validBoyNames: ListBuffer[String] = new ListBuffer[String]()
+    //    var validMenNames: ListBuffer[String] = new ListBuffer[String]()
+    //
+    //    for (person <- persons) {
+    //      if (person.age < 18) {
+    //        boys += person
+    //      } else {
+    //        men += person
+    //      }
+    //    }
+    //
+    //    var sortedBoys = boys.toList.sortBy(_.age)
+    //    var sortedMen = men.toList.sortBy(_.age)
+    //
+    //    for (boy <- sortedBoys) {
+    //      validBoyNames += boy.firstName
+    //    }
+    //    for (man <- sortedMen) {
+    //      validMenNames += man.firstName
+    //    }
+    //    List(validBoyNames.toList, validMenNames.toList)
 
-    var sortedBoys = boys.toList.sortBy(_.age)
-    var sortedMen = men.toList.sortBy(_.age)
+    //TO --------
 
-    for (boy <- sortedBoys) {
-      validBoyNames += boy.firstName
-    }
-    for (man <- sortedMen) {
-      validMenNames += man.firstName
-    }
-    List(validBoyNames.toList, validMenNames.toList)
+    def sortByAgeAndMapToName(persons: List[Person]) = persons.sortBy(_.age).map(_.firstName)
+    val (minors, adults) = persons.partition(_.age < 18)
+    List(sortByAgeAndMapToName(minors), sortByAgeAndMapToName(adults))
   }
 
 }
