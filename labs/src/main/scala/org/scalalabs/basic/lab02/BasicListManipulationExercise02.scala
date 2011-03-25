@@ -12,7 +12,14 @@ object BasicListManipulationExercise02 {
    * As usual, various ways exist: pattern matching, folding, ...
    */
   def maxElementInList(l: List[Int]): Int = {
-    error("fix me")
+      def f (is: List[Int], acc: Int): Int = {
+          is match {
+            case Nil => acc
+            case (x :: xs) if x > acc => f(xs, x)
+            case (x :: xs)            => f(xs, acc)
+        }
+      }
+      f(l,0)
   }
 
   /**
