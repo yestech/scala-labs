@@ -21,10 +21,35 @@ object RecursionPatternMatchingExercise {
    *************************************************************************/
 
   def compress[T](in: List[T]): List[T] = {
-    error("fix me")
+    //my version
+    def trimDup(prev: T, list: List[T]): List[T] = list match {
+      case Nil => List(prev)
+      case (head :: tail) if (head == prev) => trimDup(head, tail)
+      case (head :: tail) => prev :: trimDup(head, tail)
+    }
+    trimDup(in.head, in)
+
+    //solutions version
+    /*
+    //built in:
+    // in.distinct
+    in match {
+      case Nil => Nil
+      case a :: b :: rest if a == b => compress(a :: rest)
+      case a :: rest => a :: compress(rest)
+    }
+     */
   }
 
   def groupConsecutive[T](in: List[T]): List[List[T]] = {
+//    def joinDups(prev: T, in: List[T]): List[T] = {
+//      in match {
+//        case Nil => Nil
+//        case (head :: tail) if (head == prev) => prev :: joinDups (head, tail)
+//        case (head :: tail) => groupConsecutive(tail)
+//      }
+//    }
+//    List(joinDups(in.head, in))
     error("fix me")
   }
 

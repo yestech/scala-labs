@@ -4,7 +4,7 @@ package org.scalalabs.basic.lab03
  * This exercise introduces you to the powerful pattern matching features of Scala.
  *
  * Pattern matching can in its essence be compared to Java's 'switch' statement,
- * even though it provides many more possibilites. Whereas the Java switch statmenet
+ * even though it provides many more possibilities. Whereas the Java switch statement
  * lets you 'match' primitive types up to int's, Scala's pattern matching goes much
  * further. Practically everything from all types of objects and Collections
  * can be matched, not forgetting xml and a special type of class called case classes.
@@ -27,15 +27,32 @@ object BasicPatternMatchingExercise {
    *************************************************************************/
 
   def describeLanguage(s: String) = {
-    error("fix me")
+    s match {
+      case "Java" => "OOP"
+      case "Smalltalk" => "OOP"
+      case "Clojure" => "Functional"
+      case "Haskell" => "Functional"
+      case "Scala" => "Hybrid"
+      case "C" => "Procedural"
+      case _ => "Unknown"
+    }
   }
 
-  def matchOnInputType(in: Any) = {
-    error("fix me")
+  def matchOnInputType(in: Any) = in match {
+    case s: String => "A string with length " + s.length
+    case i: Int if i > 0 => "A positive integer"
+    case i: Int if i < 0 => "A negative integer"
+    case o: Option[_] => "A Scala Option subtype"
+    case a: AnyRef => "Some Scala class"
+    case _ => "A null value"
   }
 
   def older(p: Person): Option[String] = {
-    error("fix me")
+    //Need a person object because p is of type person
+    p match {
+      case Person(name,age) if age == 31 => Some("Jack")
+      case _ => None
+    }
   }
 
   /*************************************************************************
@@ -44,15 +61,16 @@ object BasicPatternMatchingExercise {
    *************************************************************************/
 
   val pf1: PartialFunction[String, String] = {
-    error("fix me")
+    case "scala-labs" => "found scala-labs"
+    case "stuff" => "found stuff"
   }
 
   val pf2: PartialFunction[String, String] = {
-    error("fix me")
+    case "other stuff" => "found other stuff"
   }
 
   val pf3:PartialFunction[String, String] = {
-    error("fix me")
+    pf1 orElse pf2
   }
 
 }
